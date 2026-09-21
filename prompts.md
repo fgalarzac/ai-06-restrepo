@@ -206,3 +206,11 @@ For your hand derivation, I recommend the **wage response to a small increase in
 ## User's source decision (verbatim)
 
 usa el paper oficial. Es decir, que ya esté finalizado. Lo demás decide a tu criterio
+
+## Assistant's final raw response (verbatim)
+
+Preparé la Etapa 1 con la versión final de *American Economic Review* y abrí el [PR #1](https://github.com/fgalarzac/ai-06-restrepo/pull/1) de `apoyo` a `main`. Incluye el README, el registro literal en `prompts.md`, notas de análisis, dos extensiones contrastadas con el paper, `sim.py` y dos figuras. La derivada salarial de la simulación coincidió con una diferencia finita; el PDF quedó ignorado por Git.
+
+**Derivación a mano recomendada:** con $K$ fijo, deriva la respuesta del salario a un pequeño aumento del umbral $I$. Separa productividad y desplazamiento, y explica por qué el salario sube para $K>\widetilde K$ en la versión publicada. Es una pieza breve que permite comprobar la lógica central de la Proposición 3.
+
+Dejé el PR sin fusionar y no comenté el issue del curso.
