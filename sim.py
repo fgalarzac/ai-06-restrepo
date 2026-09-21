@@ -60,7 +60,7 @@ class Economy:
                 "share": share, "ratio": W / R, "J": j}
 
     def equal_cost_threshold(self, K: float) -> float:
-        """The unique x with W/R=gamma(x), before imposing I."""
+        """Frontier value where the constrained and free regimes meet."""
         def gap(x: float) -> float:
             q = self.at_allocation(x, K)
             return math.log(q["ratio"]) - self.A * x
@@ -68,10 +68,12 @@ class Economy:
         return brentq(gap, 1e-5, 1 - 1e-5, xtol=1e-12)
 
     def equilibrium(self, I: float, K: float) -> dict[str, float]:
-        tilde = self.equal_cost_threshold(K)
-        q = self.at_allocation(min(I, tilde), K)
+        switch_I = self.equal_cost_threshold(K)
+        q = self.at_allocation(min(I, switch_I), K)
         q["I"] = I
-        q["I_tilde"] = tilde
+        q["I_switch"] = switch_I
+        # Cost-equality index at *current* equilibrium factor prices.
+        q["I_tilde"] = math.log(q["ratio"]) / self.A
         return q
 
     def proposition3_terms(self, I: float, K: float) -> dict[str, float]:
@@ -96,15 +98,15 @@ def allocation_figure() -> None:
     fig, axes = plt.subplots(2, 2, figsize=(10, 7), sharex="col")
     for col, (economy, K) in enumerate(cases):
         data = [economy.equilibrium(float(I), K) for I in grid]
-        tilde = data[0]["I_tilde"]
+        switch_I = data[0]["I_switch"]
         actual = np.array([q["x"] for q in data])
         share = np.array([q["share"] for q in data])
         axes[0, col].plot(grid, actual, color="#176B84", lw=2.3, label="$I^*$")
         axes[0, col].plot(grid, grid, color="0.55", lw=1, ls=":", label="available $I$")
-        axes[0, col].axvline(tilde, color="#B74C3D", ls="--", lw=1.3)
-        axes[0, col].set_title(f"$A=4$, $\\sigma=1.2$, $K={K:g}$; $\\widetilde I={tilde:.3f}$")
+        axes[0, col].axvline(switch_I, color="#B74C3D", ls="--", lw=1.3)
+        axes[0, col].set_title(f"$A=4$, $\\sigma=1.2$, $K={K:g}$; $I_{{switch}}={switch_I:.3f}$")
         axes[1, col].plot(grid, share, color="#6A5BA5", lw=2.3)
-        axes[1, col].axvline(tilde, color="#B74C3D", ls="--", lw=1.3)
+        axes[1, col].axvline(switch_I, color="#B74C3D", ls="--", lw=1.3)
         axes[1, col].set_xlabel("Available automation frontier $I$")
         axes[1, col].set_ylim(0, 1)
         axes[0, col].set_ylim(0, 1)
@@ -186,10 +188,11 @@ def verify_equations() -> None:
     numeric = (math.log(eco.equilibrium(I + h, K)["W"])
                - math.log(eco.equilibrium(I - h, K)["W"])) / (2 * h)
     assert abs(analytic - numeric) < 2e-6, (analytic, numeric)
-    free_I = min(0.9, q["I_tilde"] + 0.08)
+    free_I = min(0.9, q["I_switch"] + 0.08)
     free = eco.equilibrium(free_I, K)
     free_more = eco.equilibrium(min(0.99, free_I + 0.02), K)
     assert free["x"] == free_more["x"] and free["W"] == free_more["W"]
+    assert abs(free["I_tilde"] - free["x"]) < 1e-10
     print(f"Proposition 3 derivative: formula={analytic:.8f}, finite difference={numeric:.8f}")
     print(f"Figure 3 free regime: W(I={free_I:.3f})=W(I={free_I+0.02:.3f})={free['W']:.8f}")
 
