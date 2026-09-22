@@ -1,0 +1,82 @@
+name: Verify AR18 Lean formalization
+
+on:
+  push:
+    branches:
+      - apoyo
+    paths:
+      - "lean/**"
+      - ".github/workflows/lean-ar18.yml"
+  pull_request:
+    paths:
+      - "lean/**"
+      - ".github/workflows/lean-ar18.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ar18-lean-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      LEAN_NUM_THREADS: "1"
+
+    steps:
+      - name: Check out AppliedModelingLib
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: nikhgarg/AppliedModelingLib
+          ref: e952266be81e96bbeecea6af83d639af324a4438
+          persist-credentials: false
+
+      - name: Check out this submission
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          path: submission
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Install submitted paper folder
+        run: |
+          test -d submission/lean
+          rm -rf papers/AR18RaceManMachine
+          cp -a submission/lean papers/AR18RaceManMachine
+          printf '%s\n' 'import AR18RaceManMachine.ProofInterface' > papers/AR18RaceManMachine.lean
+          cat >> lakefile.toml <<'EOF'
+
+          [[lean_lib]]
+          name = "AR18RaceManMachine"
+          srcDir = "papers"
+          EOF
+
+      - name: Restore the pinned NBER source
+        run: |
+          mkdir -p papers/AR18RaceManMachine/source
+          curl --fail --location --retry 3 \
+            https://www.nber.org/system/files/working_papers/w22252/w22252.pdf \
+            --output papers/AR18RaceManMachine/source/w22252.pdf
+          echo "441d01202afd56ef8002fc24ffc2beb51191741c0b5accb11d2534620dd616b7  papers/AR18RaceManMachine/source/w22252.pdf" \
+            | sha256sum --check --strict
+
+      - name: Set up Lean dependencies
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9 # v1
+        with:
+          auto-config: "false"
+          build: "false"
+          test: "false"
+          lint: "false"
+          use-github-cache: "false"
+          use-mathlib-cache: "true"
+
+      - name: Build the paper target
+        run: lake build +AR18RaceManMachine
+
+      - name: Run the official fast check
+        run: python3 scripts/paper_contribution.py check AR18RaceManMachine --fast
+

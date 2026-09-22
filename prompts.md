@@ -216,3 +216,46 @@ Preparé la Etapa 1 con la versión final de *American Economic Review* y abrí 
 **Derivación a mano recomendada:** con $K$ fijo, deriva la respuesta del salario a un pequeño aumento del umbral $I$. Separa productividad y desplazamiento, y explica por qué el salario sube para $K>\widetilde K$ en la versión publicada. Es una pieza breve que permite comprobar la lógica central de la Proposición 3.
 
 Dejé el PR sin fusionar y no comenté el issue del curso.
+
+## User's Lean-stage request (verbatim)
+
+te paso la captura después. Ahora, quiero que corras la parte de lean.
+
+## Lean formalization prompt (verbatim)
+
+Please formalize https://www.nber.org/papers/w22252 (NBER Working Paper 22252, revised June 2017) using the paper-formalization skill and workflow in this repository. Use AR18RaceManMachine as the paper folder.
+
+## Lean agent's raw output (verbatim)
+
+Completed in checkpoint commit **`1fe59ee`**.
+
+### Proved Lean endpoints
+
+- `staticTaskThreshold`
+- `proposition3StaticCore`
+- Supporting proofs:
+  - `staticTaskThreshold_impl`
+  - `factorPriceDecomposition_impl`
+  - `proposition3AutomationSignDecomposition_impl`
+
+There are **zero `sorry`, `admit`, temporary axioms, or opaque shortcuts** in the Lean files.
+
+### Key files
+
+- `papers/AR18RaceManMachine/PaperInterface.lean`
+- `papers/AR18RaceManMachine/ProofInterface.lean`
+- `papers/AR18RaceManMachine/MainTheorems.lean`
+- `papers/AR18RaceManMachine/Assumptions.lean`
+- `papers/AR18RaceManMachine/audit/paper_statement_map.json`
+- `papers/AR18RaceManMachine/audit/source_proof_fidelity.json`
+- `papers/AR18RaceManMachine/docs/FORMALIZATION_PLAN.md`
+- `papers/AR18RaceManMachine/status.json`
+- `papers/AR18RaceManMachine/README.md`
+
+### Honest boundary
+
+The status is **partially formalized**. Proposition 3 remains conditional on equations B9, B10, and coefficient positivity; most named results remain explicitly inventoried as deferred.
+
+The literal NBER clause `K̄ > K̲` is preserved as open defect `AR18-P3-CAPITAL-THRESHOLD-01`. No AER correction was silently adopted.
+
+JSON parsing and Git whitespace checks passed. Lean validation could not run because this host has no Lean/Lake or WSL distribution; exact Linux validation commands are recorded in the formalization plan.

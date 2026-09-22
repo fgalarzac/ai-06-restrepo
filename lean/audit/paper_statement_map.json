@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "paper": "AR18RaceManMachine",
+  "title": "The Race Between Machine and Man: Implications of Technology for Growth, Factor Shares and Employment",
+  "paper_interface_namespace": "AR18RaceManMachine",
+  "semantic_route_schema": 2,
+  "source_anchor_evidence_required": true,
+  "source_claim_atoms_schema": 1,
+  "source_coverage_mode": "named_theoretical_statements",
+  "source_curated": false,
+  "source_inventory_kind": "source_first_partial_formalization",
+  "source_inventory_policy": "All mechanically detected named assumptions, propositions, corollaries, and appendix lemmas are listed below. Only the user-prioritized static task cutoff and the algebraic core of Proposition 3 have Lean routes in this checkpoint; every other named item remains explicit proof debt.",
+  "source_url": "https://www.nber.org/papers/w22252",
+  "source_version": "NBER Working Paper 22252, revised June 2017",
+  "source_artifact_path": "source/w22252.pdf",
+  "source_artifact_sha256": "441d01202afd56ef8002fc24ffc2beb51191741c0b5accb11d2534620dd616b7",
+  "source_text_path": "source/w22252.txt",
+  "source_text_sha256": "f2a917676a69d14e6fb96ada88f37db82d87bcb92e464f023691ceed9a532083",
+  "source_location_policy": "Line locators refer to Python splitlines() over the pinned UTF-8 extraction. The PDF remains authoritative when extraction loses mathematical accents or bars.",
+  "source_named_result_inventory_review": {
+    "complete": false,
+    "validator": "Codex source-first intake",
+    "method": "Mechanical named-heading inventory plus focused visual inspection of NBER PDF pages 12-13 and Appendix B-12/B-13",
+    "validated_at": "2026-09-22",
+    "reason_incomplete": "The complete named surface is inventoried, but the non-selected dynamic and appendix statements have not received source-to-Lean semantic routes or proof endpoints."
+  },
+  "items": {
+    "assumption_1_strict_comparative_advantage": {
+      "claim_bearing": true,
+      "inventory_role": "source_semantic_declaration",
+      "source_kind": "assumption",
+      "statement": "Labor productivity gamma is strictly increasing in the task index.",
+      "source_location": "source/w22252.txt:351-354",
+      "source_anchor_evidence": [
+        {
+          "publication_locator": "NBER PDF page 6; extraction lines 351-354",
+          "line_start": 351,
+          "line_end": 354,
+          "quoted_text": "Assumption 1 γ(i) is strictly increasing\nAssumption 1 implies that labor has strict comparative advantage in tasks with a higher index,\nand will guarantee that, in equilibrium, lower-indexed tasks will be automated, while higher-indexed\nones will be produced with labor.",
+          "quoted_text_sha256": "9643a417b2cc638073525695d73d766298217b9d6b2ce2cfafcd6015ff681e1a"
+        }
+      ],
+      "lean_declarations": [
+        "AR18RaceManMachine.StrictComparativeAdvantage"
+      ]
+    },
+    "static_task_threshold_after_equation_6": {
+      "claim_bearing": true,
+      "inventory_role": "asserted_result",
+      "review_intensity": "main_text_primary",
+      "source_kind": "claim",
+      "statement": "The unique equilibrium cutoff is I*=min{I,I-tilde}; tasks below it are assigned to capital and tasks above it to labor.",
+      "source_location": "source/w22252.txt:427-438",
+      "source_anchor_evidence": [
+        {
+          "publication_locator": "NBER PDF page 8; extraction lines 427-438",
+          "line_start": 427,
+          "line_end": 438,
+          "quoted_text": "Because labor has a strict comparative advantage in tasks with a higher index, the expression\nfor p(i) implies that there is a (unique) threshold ˜I such that\nW\nR =γ(˜I). ( 6)\nThis threshold represents the task for which the costs of producing with capital and labor are equal.\nFor all tasks i < ˜I, we have R < W/γ(i), and without any other constraints, these tasks will be\nproduced with capital. However, if ˜I >I, ﬁrms cannot use capital all the way up to task ˜I because\nof the constraint imposed by the available automation technology. This implies that there exists a\nunique equilibrium threshold task\nI ∗ = min{I, ˜I}\nsuch that all tasks i < I∗ will be produced with capital, while all tasks i > I∗ will be produced\nwith labor. 12",
+          "quoted_text_sha256": "2ccd3fbef1ece5f06b85ae3a3e951570db83970dee4fa6a6fbd9b876789597a1"
+        }
+      ],
+      "source_claim_atoms": [
+        {
+          "id": "threshold.indifference_and_minimum_allocation",
+          "semantic_claim": "Strictly increasing productivity and gamma(I-tilde)=W/R imply the cutoff min{I,I-tilde}, with automation available and capital relatively cheaper below it and labor required or relatively cheaper above it.",
+          "source_locator": "source/w22252.txt:427-438",
+          "source_quote_sha256": "2ccd3fbef1ece5f06b85ae3a3e951570db83970dee4fa6a6fbd9b876789597a1",
+          "reviewed_lean_route": "AR18RaceManMachine.staticTaskThresholdSpec"
+        }
+      ],
+      "lean_declarations": [
+        "AR18RaceManMachine.PositiveTaskProductivity",
+        "AR18RaceManMachine.AutomationAvailable",
+        "AR18RaceManMachine.IsCostIndifferenceTask",
+        "AR18RaceManMachine.EquilibriumTaskThreshold",
+        "AR18RaceManMachine.staticTaskThresholdSpec"
+      ],
+      "proof_declarations": [
+        "AR18RaceManMachine.staticTaskThreshold"
+      ],
+      "source_status": "selected_and_proved",
+      "model_convention_ids": [
+        "AR18-POSITIVE-TASK-PRICES-01"
+      ]
+    },
+    "proposition_3_impact_of_technology": {
+      "claim_bearing": true,
+      "inventory_role": "asserted_result",
+      "review_intensity": "main_text_primary",
+      "source_kind": "proposition",
+      "statement": "Proposition 3 gives productivity and factor-price effects of automation and new tasks; this checkpoint proves only its B9-B10 factor-price decomposition and automation productivity-versus-displacement sign algebra.",
+      "source_location": "source/w22252.txt:690-765; 4278-4288",
+      "source_anchor_evidence": [
+        {
+          "publication_locator": "NBER PDF page 13; extraction lines 718-739",
+          "line_start": 718,
+          "line_end": 739,
+          "quoted_text": "Moreover, let sL denote the labor share. The impact of technology on factor prices in this\ncase is given by:\nd lnW =d lnY |K,L + (1 − sL)\n( 1\nˆσ +εL\nΛNd N − 1\nˆσ +εL\nΛId I\n)\n,\nd lnR =d lnY |K,L − sL\n( 1\nˆσ +εL\nΛNd N − 1\nˆσ +εL\nΛId I\n)\n.\nThat is, a higher N always increases the equilibrium wage but may reduce the rental rate,\nwhile a higher I always increases the rental rate but may reduce the equilibrium wage. In\nparticular, there exists K >K such that an increase in I i ncreases the equilibrium wage when\nK <K a nd reduces it when K >K.",
+          "quoted_text_sha256": "381ccffb3a7b5e577a24fe56cc3a6fb076eb4f53f9482e2a93fd95364a53190d"
+        },
+        {
+          "publication_locator": "NBER Appendix B-12/B-13; extraction lines 4278-4288",
+          "line_start": 4278,
+          "line_end": 4288,
+          "quoted_text": "We now derive the formulas for the impact of technology on factor prices. Let sL denote the\nlabor share in net output. Because WL +RK = (1 − η)Y , we obtain:\nsLd lnW + (1 − sL)d lnR =d lnY |K,L. (B9)\nMoreover, Proposition 2 implies that\nd lnW − d lnR = 1\nˆσ +εL\nΛNd N − 1\nˆσ +εL\nΛId I. (B10)\nSolving the system of equations given by (B9) and (B10), we obtain the formulas for d lnW and\nd lnR in the proposition.",
+          "quoted_text_sha256": "00258b76bf7e5ed84ff2c7757a06062cc19045fa1d63b886e2f16da476da9179"
+        }
+      ],
+      "source_claim_atoms": [
+        {
+          "id": "proposition3.factor_price_linear_system",
+          "semantic_claim": "Equations B9 and B10 solve to the displayed productivity plus task-reallocation formulas for wage and rental changes.",
+          "source_locator": "source/w22252.txt:4278-4288",
+          "source_quote_sha256": "00258b76bf7e5ed84ff2c7757a06062cc19045fa1d63b886e2f16da476da9179",
+          "reviewed_lean_route": "AR18RaceManMachine.proposition3StaticCoreSpec"
+        },
+        {
+          "id": "proposition3.automation_productivity_displacement_sign",
+          "semantic_claim": "For automation alone, the wage change is the positive productivity effect minus the displacement effect, while the rental change adds the displacement component and is positive.",
+          "source_locator": "source/w22252.txt:718-739",
+          "source_quote_sha256": "381ccffb3a7b5e577a24fe56cc3a6fb076eb4f53f9482e2a93fd95364a53190d",
+          "reviewed_lean_route": "AR18RaceManMachine.proposition3StaticCoreSpec"
+        }
+      ],
+      "lean_declarations": [
+        "AR18RaceManMachine.proposition3StaticCoreSpec"
+      ],
+      "proof_declarations": [
+        "AR18RaceManMachine.proposition3StaticCore"
+      ],
+      "source_status": "partial_formalization",
+      "unproved_source_components": [
+        "Derivation and positivity of the exact d ln Y|K,L coefficients from equation (12)",
+        "New-task and unconstrained-allocation cases",
+        "Existence and ordering of the capital threshold in the final sentence"
+      ],
+      "source_note": "Visual inspection of authoritative NBER PDF page 13 shows the final sentence as: there exists K-bar > K-underbar, wage rises when K < K-bar and falls when K > K-bar. Assumption 3 imposes K < K-underbar. The later AER formula is not used as Lean authority. No corrected target has been approved."
+    }
+  },
+  "deferred_named_presentations": [
+    {"label": "Assumption 2", "source_line": 371},
+    {"label": "Assumption 3", "source_line": 445},
+    {"label": "Proposition 1", "source_line": 516},
+    {"label": "Corollary 1", "source_line": 590},
+    {"label": "Proposition 2", "source_line": 597},
+    {"label": "Assumption 1 prime", "source_line": 829},
+    {"label": "Proposition 4", "source_line": 992},
+    {"label": "Proposition 5", "source_line": 1059},
+    {"label": "Assumption 4", "source_line": 1288},
+    {"label": "Proposition 6", "source_line": 1387},
+    {"label": "Corollary 2", "source_line": 1509},
+    {"label": "Assumption 1 double-prime", "source_line": 1574},
+    {"label": "Proposition 7", "source_line": 1604},
+    {"label": "Proposition 8", "source_line": 1713},
+    {"label": "Proposition 9", "source_line": 1781},
+    {"label": "Assumption 2 prime", "source_line": 1963},
+    {"label": "Lemma A1", "source_line": 2136},
+    {"label": "Lemma A2", "source_line": 2179},
+    {"label": "Lemma A3", "source_line": 2486},
+    {"label": "Proposition B1", "source_line": 3896},
+    {"label": "Lemma B1", "source_line": 4333},
+    {"label": "Proposition B2", "source_line": 5497},
+    {"label": "Assumption 2 double-prime", "source_line": 5902},
+    {"label": "Proposition B3", "source_line": 5908},
+    {"label": "Proposition B4", "source_line": 5934}
+  ]
+}
