@@ -1,0 +1,56 @@
+name: Build presentation PDF
+
+on:
+  push:
+    branches:
+      - apoyo
+    paths:
+      - "presentation.tex"
+      - "figures/**"
+      - "hand/**"
+      - ".github/workflows/build-presentation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: presentation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out apoyo
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: apoyo
+
+      - name: Compile Beamer deck
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: presentation.tex
+          args: -pdf -interaction=nonstopmode -halt-on-error
+
+      - name: Upload compiled PDF
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: presentation-pdf
+          path: presentation.pdf
+
+      - name: Commit compiled PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add presentation.pdf
+          if git diff --cached --quiet; then
+            echo "presentation.pdf is already current"
+          else
+            git commit -m "Compile presentation PDF"
+            git push origin HEAD:apoyo
+          fi
+
+
