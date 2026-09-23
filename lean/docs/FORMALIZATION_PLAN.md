@@ -30,7 +30,7 @@ deep-audit material unless they support a selected result.
 
 | Order | Source item | Lean Spec | Proof endpoint | Status |
 |---:|---|---|---|---|
-| 1 | Static task threshold after equation (6) | `staticTaskThresholdSpec` | `staticTaskThreshold` | proved in source files; Linux Lean validation pending |
+| 1 | Static task threshold after equation (6) | `staticTaskThresholdSpec` | `staticTaskThreshold` | proved; Linux Lean validation passed |
 | 2 | Proposition 3 static algebraic core | `proposition3StaticCoreSpec` | `proposition3StaticCore` | proved conditionally on (B9), (B10), and positive coefficients; full proposition partial |
 
 The task-threshold proof uses Assumption 1, positivity of productivity and the
@@ -75,6 +75,12 @@ target has been approved. This clause is recorded as open defect
 
 ## Validation commands
 
+GitHub Actions [run 35850485751](https://github.com/fgalarzac/ai-06-restrepo/actions/runs/35850485751)
+passed both `lake build +AR18RaceManMachine` and
+`python3 scripts/paper_contribution.py check AR18RaceManMachine --fast` on
+2026-09-23 against AppliedModelingLib commit
+`e952266be81e96bbeecea6af83d639af324a4438` and the pinned NBER PDF hash.
+
 On a Linux checkout with the pinned Lean toolchain:
 
 ```text
@@ -87,3 +93,4 @@ LEAN_NUM_THREADS=1 lake build +AR18RaceManMachine
 
 For a later closeout, run the repository planner first. No closeout, semantic
 judgment, or accepted receipt is claimed by this checkpoint.
+
