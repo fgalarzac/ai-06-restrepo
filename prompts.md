@@ -259,3 +259,8 @@ The status is **partially formalized**. Proposition 3 remains conditional on equ
 The literal NBER clause `K̄ > K̲` is preserved as open defect `AR18-P3-CAPITAL-THRESHOLD-01`. No AER correction was silently adopted.
 
 JSON parsing and Git whitespace checks passed. Lean validation could not run because this host has no Lean/Lake or WSL distribution; exact Linux validation commands are recorded in the formalization plan.
+
+## User's presentation-stage request (verbatim)
+
+realizaste la presentación (pdf y tex) de los resultados de lean? si aún no está completo, hazlo
+
