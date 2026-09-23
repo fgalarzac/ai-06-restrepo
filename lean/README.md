@@ -11,6 +11,7 @@ Restrepo, NBER Working Paper 22252, revised June 2017.
 | Selected results | Static task threshold; Proposition 3 factor-price and productivity/displacement algebra |
 | Proof holes in tracked Lean files | 0 |
 | Local Lean validation | Unavailable on this Windows host; Linux CI required |
+| Linux CI validation | Passed `lake build +AR18RaceManMachine` and the official fast check on 2026-09-23 ([run 35850485751](https://github.com/fgalarzac/ai-06-restrepo/actions/runs/35850485751)) |
 
 ## What is proved
 
@@ -41,3 +42,4 @@ inequality was not substituted.
   anchors and the full deferred named-result ledger.
 - [source_proof_fidelity.json](audit/source_proof_fidelity.json): checked proof
   steps and the NBER capital-threshold issue.
+
