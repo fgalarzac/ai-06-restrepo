@@ -80,7 +80,9 @@ theorem factorPriceDecomposition_impl
         productivityChange + (1 - laborShare) * relativePriceChange ∧
       rentalChange =
         productivityChange - laborShare * relativePriceChange := by
-  constructor <;> nlinarith
+  constructor
+  · linear_combination hIncome + (1 - laborShare) * hRelative
+  · linear_combination hIncome - laborShare * hRelative
 
 /-- Automation-only specialization of Proposition 3. `productivityChange` is
 the positive `d ln Y|_{K,L}` term and `displacement` is the positive magnitude
@@ -116,3 +118,4 @@ theorem proposition3AutomationSignDecomposition_impl
       · constructor <;> intro hComparison <;> nlinarith
 
 end AR18RaceManMachine
+
