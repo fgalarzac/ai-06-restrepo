@@ -16,5 +16,11 @@
 DNI*
 *_DNI*
 
-# The article itself: third-party PDF, fetch it from arXiv
+# Source articles: third-party PDFs are read locally, never committed
 paper/*.pdf
+/w22252.pdf
+/aer-2018.pdf
+
+# Local Python cache
+__pycache__/
+*.pyc
